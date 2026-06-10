@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, thangoomeyy!</title>
+    <!-- Romantic and clean fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 50%, #ffe5ec 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background floating hearts container */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -50px;
+            color: #ff4d6d;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive Card Container */
+        .card-container {
+            position: relative;
+            width: 380px;
+            height: 480px;
+            z-index: 10;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+
+        /* Flip behavior triggered by JavaScript class */
+        .card.is-open {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            border: 4px solid #fff;
+        }
+
+        /* Front Card Design */
+        .card-front {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            color: #ff4d6d;
+            text-align: center;
+        }
+
+        .heart-main {
+            font-size: 80px;
+            animation: pulse 1.5s infinite;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 10px rgba(255, 77, 109, 0.3));
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .click-hint {
+            font-size: 0.9rem;
+            color: #ff758f;
+            margin-top: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            animation: alternatePulse 2s infinite ease-in-out;
+        }
+
+        @keyframes alternatePulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Back Card Design (Inside Letter) */
+        .card-back {
+            background: #ffffff;
+            color: #4a4a4a;
+            transform: rotateY(180deg);
+            justify-content: space-between;
+            text-align: left;
+            box-shadow: inset 0 0 40px rgba(255, 194, 209, 0.2);
+        }
+
+        .letter-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff4d6d;
+            width: 100%;
+        }
+
+        .letter-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            color: #555;
+            font-weight: 300;
+        }
+
+        .letter-footer {
+            width: 100%;
+            text-align: right;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #ff4d6d;
+        }
+
+        /* Sparkle details */
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ffe5ec;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkling 2.5s infinite ease-in-out;
+        }
+
+        @keyframes twinkling {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 400px) {
+            .card-container {
+                width: 90vw;
+                height: 120vw;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container for the background floating hearts animation -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Decorative static sparkles around the background -->
+    <div class="sparkle" style="top: 15%; left: 10%;"></div>
+    <div class="sparkle" style="top: 25%; right: 15%; animation-delay: 0.5s;"></div>
+    <div class="sparkle" style="bottom: 20%; left: 20%; animation-delay: 1s;"></div>
+    <div class="sparkle" style="bottom: 30%; right: 10%; animation-delay: 1.5s;"></div>
+
+    <!-- The Interactive Card -->
+    <div class="card-container" onclick="toggleCard()">
+        <div class="card" id="birthdayCard">
+            
+            <!-- Front Cover -->
+            <div class="card-front">
+                <div class="heart-main">❤️</div>
+                <h1>Happy Birthday,thangoomeyy!</h1>
+                <p style="color: #c9184a; font-weight: 600;">To the most beautiful girl in the world</p>
+                <div class="click-hint">Click to open your card</div>
+            </div>
+
+            <!-- Inside Letter (Flipped side) -->
+            <div class="card-back">
+                <div class="letter-header">Dearest [sadhu],</div>
+                
+                <div class="letter-body">
+                   hii thangooo thank you so much being important roll in my life . nee dha enaku ellam unake theriyum eruthalum you are my happieenesss and en thangoo en idupuu en ummmmma .so un algaiii ya nalla pathukooo en thangomeyyy 'nee avalo alagu not only face unga love kala en love compare kuda pana mudiyathu na evalo hurt panalum you just comeback to me make a cute moments . but eppo neee dha en thitara na dha varen unkuda ena paratha nee dha en thangoo so i say again i love you .en alagiii
+                    <br><br>
+                    
+                </div>
+                
+                <div class="letter-footer">With all my love, <br>[sadhu]</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Toggle card open/close state on click
+        function toggleCard() {
+            const card = document.getElementById('birthdayCard');
+            card.classList.toggle('is-open');
+            
+            // Generate extra burst of hearts when card is opened
+            if (card.classList.contains('is-open')) {
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(createHeart, i * 100);
+                }
+            }
+        }
+
+        // Dynamically generate background floating hearts
+        const heartsContainer = document.getElementById('heartsContainer');
+        const heartIcons = ['❤️🎇🎀', '😘', '🎈😍', '🌸', '✨'];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            
+            // Randomly pick a heart style
+            heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            
+            // Random positioning and sizes
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 4 + 4 + 's'; // Spawns float speed between 4s and 8s
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px'; // Random size between 15px and 30px
+            
+            heartsContainer.appendChild(heart);
+
+            // Remove heart from DOM once transition completes
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Spawn a heart at regular intervals
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
